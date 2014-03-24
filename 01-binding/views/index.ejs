@@ -3,10 +3,14 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script>
+        var employees = <%- employees %>;
+    </script>
   </head>
   <body>
     <h1 ng-bind="title"></h1>
     <input ng-model="title" type="text" />
+
   <script src='/javascripts/angular.js'></script>
   </body>
 </html>
