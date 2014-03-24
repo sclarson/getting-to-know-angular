@@ -8,14 +8,14 @@
     see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
   <body ng-init='employees=<%-employees%>'>
     <!--<h1 ng-bind="title"></h1>-->
-    <!--<input ng-model="title" type="text" />-->
+    <label for="userInput">Filter:</label><input id="userInput" ng-model="userInput" type="text" />
     <hr/>
     <p>Employees:</p>
     <ul>
         <!--http://docs.angularjs.org/api/ng/directive/ngRepeat-->
         <!--http://docs.angularjs.org/api/ng/filter/orderBy-->
         <!--Ordering on the client doesn't make sense in many situations, think before you type-->
-        <li ng-repeat="employee in employees | orderBy:'last_name' ">{{employee.first_name}} {{employee.last_name}}</li>
+        <li ng-repeat="employee in employees | orderBy:'last_name' | filter: userInput ">{{employee.first_name}} {{employee.last_name}}</li>
     </ul>
   <script src='/javascripts/angular.js'></script>
   </body>
