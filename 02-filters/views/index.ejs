@@ -13,7 +13,9 @@
     <p>Employees:</p>
     <ul>
         <!--http://docs.angularjs.org/api/ng/directive/ngRepeat-->
-        <li ng-repeat="employee in employees">{{employee.first_name}} {{employee.last_name}}</li>
+        <!--http://docs.angularjs.org/api/ng/filter/orderBy-->
+        <!--Ordering on the client doesn't make sense in many situations, think before you type-->
+        <li ng-repeat="employee in employees | orderBy:'last_name' ">{{employee.first_name}} {{employee.last_name}}</li>
     </ul>
   <script src='/javascripts/angular.js'></script>
   </body>
