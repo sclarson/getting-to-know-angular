@@ -8,9 +8,14 @@
     </script>
   </head>
   <body>
-    <h1 ng-bind="title"></h1>
-    <input ng-model="title" type="text" />
+    <!--<h1 ng-bind="title"></h1>-->
+    <!--<input ng-model="title" type="text" />-->
 
+    <hr/>
+    <p>Employees:</p>
+    <ul>
+        <li ng-repeat="employee in window.employees">{{employee.first_name}} {{employee.last_name}}</li>
+    </ul>
   <script src='/javascripts/angular.js'></script>
   </body>
 </html>
