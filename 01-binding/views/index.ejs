@@ -3,18 +3,16 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script>
-        var employees = <%- employees %>;
-    </script>
   </head>
-  <body>
+  <!-- This is not an appropriate usage of ng-init, but it does work.
+    see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
+  <body ng-init='employees=<%-employees%>'>
     <!--<h1 ng-bind="title"></h1>-->
     <!--<input ng-model="title" type="text" />-->
-
     <hr/>
     <p>Employees:</p>
     <ul>
-        <li ng-repeat="employee in window.employees">{{employee.first_name}} {{employee.last_name}}</li>
+        <li ng-repeat="employee in employees">{{employee.first_name}} {{employee.last_name}}</li>
     </ul>
   <script src='/javascripts/angular.js'></script>
   </body>
