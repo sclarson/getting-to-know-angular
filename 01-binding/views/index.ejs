@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
   <head>
-    <title><%= title %></title>
+    <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <h1 ng-bind="title"></h1>
-    <input ng-bind="title" type="text" />
+    <input ng-model="title" type="text" />
   <script src='/javascripts/angular.js'></script>
   </body>
 </html>
