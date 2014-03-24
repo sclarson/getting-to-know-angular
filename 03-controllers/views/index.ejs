@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <!-- This is not an appropriate usage of ng-init, but it does work.
+    see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
+  <body ng-init='employees=<%-employees%>' ng-controller="ExampleController">
+    <!--<h1 ng-bind="title"></h1>-->
+    <label for="userInput">Filter:</label><input id="userInput" ng-model="userInput" type="text" />
+    <hr/>
+    <p>Employees:</p>
+    <ul>
+        <!--http://docs.angularjs.org/api/ng/directive/ngRepeat-->
+        <!--http://docs.angularjs.org/api/ng/filter/orderBy-->
+        <!--Ordering on the client doesn't make sense in many situations, think before you type-->
+        <li ng-repeat="employee in employees | orderBy:'last_name' | filter: userInput ">
+            {{employee.first_name}} {{employee.last_name}} - {{employee.occupation | uppercase}}
+        </li>
+    </ul>
+  <script src='/javascripts/angular.js'></script>
+  <script>
+        function ExampleController($scope){
+            alert('ExampleController evaluated');
+            
+        }
+  </script>
+  </body>
+</html>
