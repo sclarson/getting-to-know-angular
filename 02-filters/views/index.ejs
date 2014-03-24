@@ -15,7 +15,9 @@
         <!--http://docs.angularjs.org/api/ng/directive/ngRepeat-->
         <!--http://docs.angularjs.org/api/ng/filter/orderBy-->
         <!--Ordering on the client doesn't make sense in many situations, think before you type-->
-        <li ng-repeat="employee in employees | orderBy:'last_name' | filter: userInput ">{{employee.first_name}} {{employee.last_name}}</li>
+        <li ng-repeat="employee in employees | orderBy:'last_name' | filter: userInput ">
+            {{employee.first_name}} {{employee.last_name}} - {{employee.occupation | uppercase}}
+        </li>
     </ul>
   <script src='/javascripts/angular.js'></script>
   </body>
