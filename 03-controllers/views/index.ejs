@@ -6,7 +6,7 @@
   </head>
   <!-- This is not an appropriate usage of ng-init, but it does work.
     see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
-  <body ng-init='employees=<%-employees%>' ng-controller="ExampleController">
+  <body ng-controller="ExampleController">
     <!--<h1 ng-bind="title"></h1>-->
     <label for="userInput">Filter:</label><input id="userInput" ng-model="userInput" type="text" />
     <hr/>
@@ -21,9 +21,10 @@
     </ul>
   <script src='/javascripts/angular.js'></script>
   <script>
+//        Code inlined for demo purposes only, don't actually do this in production
         function ExampleController($scope){
             alert('ExampleController evaluated');
-            
+            $scope.employees=<%-employees%>;
         }
   </script>
   </body>
