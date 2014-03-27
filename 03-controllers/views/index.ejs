@@ -8,7 +8,8 @@
     see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
   <body ng-controller="ExampleController">
     <!--<h1 ng-bind="title"></h1>-->
-    <label for="userInput">Filter:</label><input id="userInput" ng-model="userInput" type="text" />
+    <input type="button" class="btn btn-primary" value="Say Hello" ng-click="addEmployee()" /><br/>
+    <label for="userInput" ng-bind="filterText">Filter:</label><input id="userInput" ng-model="userInput" type="text" />
     <hr/>
     <p>Employees:</p>
     <ul>
@@ -21,10 +22,17 @@
     </ul>
   <script src='/javascripts/angular.js'></script>
   <script>
-//        Code inlined for demo purposes only, don't actually do this in production
+//      Code inlined for demo purposes only, don't actually do this in production
         function ExampleController($scope){
             alert('ExampleController evaluated');
-            $scope.employees=<%-employees%>;
+            $scope.employees = <%-employees%>;
+            $scope.filterText = "Filter";
+
+            function addEmployee(){
+                alert("Oh Emm Gee HELLO FRIEND!!!!");
+            }
+
+            $scope.addEmployee = addEmployee;
         }
   </script>
   </body>
