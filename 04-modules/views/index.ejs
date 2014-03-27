@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="exampleApp">
+<head>
+  <title>{{title}}</title>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<!-- This is not an appropriate usage of ng-init, but it does work.
+  see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
+<body ng-controller="ExampleController">
+  <!--<h1 ng-bind="title"></h1>-->
+  <input type="button" class="btn btn-primary" value="Say Hello" ng-click="addEmployee()"/><br/>
+  <label for="userInput" ng-bind="filterText">Filter:</label><input id="userInput" ng-model="userInput" type="text"/>
+  <hr/>
+  <p>Employees:</p>
+  <ul>
+    <!--http://docs.angularjs.org/api/ng/directive/ngRepeat-->
+    <!--http://docs.angularjs.org/api/ng/filter/orderBy-->
+    <!--Ordering on the client doesn't make sense in many situations, think before you type-->
+    <li ng-repeat="employee in employees | orderBy:'last_name' | filter: userInput ">
+      {{employee.first_name}} {{employee.last_name}} - {{employee.occupation | uppercase}}
+    </li>
+  </ul>
+  <script src='/javascripts/angular.js'></script>
+  <script>
+    var example = angular.module('exampleApp',[]);
+    //Code inlined for demo purposes only, don't actually do this in production
+    function ExampleController($scope, $http) {
+      //http://docs.angularjs.org/api/ng/service/$http
+      $http.get('/employees').then(function(result){
+        $scope.employees = result.data;
+      }, function(errors){
+        // Handle errors here
+      });
+      $scope.filterText = "Filter";
+
+      function addEmployee() {
+        alert("Oh Emm Gee HELLO FRIEND!!!!");
+      }
+
+      $scope.addEmployee = addEmployee;
+    }
+
+    example.controller('exampleController',['$scope','$http',ExampleController]);
+  </script>
+</body>
+</html>
