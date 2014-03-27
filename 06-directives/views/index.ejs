@@ -20,9 +20,16 @@
       {{employee.first_name}} {{employee.last_name}} - {{employee.occupation | uppercase}}
     </li>
   </ul>
+  <hr />
+  <label for="firstName">FirstName:</label><input id="firstName" ng-model="firstName" focus /><br/>
+  <label for="lastName">LastName:</label><input id="lastName" ng-model="lastName" focus/><br/>
+  <label for="company">Company:</label><input id="company" ng-model="company" focus/><br/>
+  <label for="email">Email:</label><input id="email" ng-model="email" focus/><br/>
+  <label for="occupation">Occupation:</label><input id="occupation" ng-model="occupation" focus/><br/>
+  <input type="button" value="Add Employee" ng-click="addEmployee()" />
+
   <script src='/javascripts/angular.js'></script>
   <script>
-    var example = angular.module('exampleApp',[]);
     //Code inlined for demo purposes only, don't actually do this in production
     function ExampleController($scope, ExampleService) {
       $scope.filterText = 'Filter';
@@ -37,11 +44,11 @@
       function addEmployee() {
         ExampleService.addEmployee({
           active: "true",
-          company: "Lemonly",
-          email: "jbro@lemon.ly",
-          first_name: "Josh",
-          last_name: "Broton",
-          occupation: "Designer's Implementer"
+          company: $scope.company,
+          email: $scope.email,
+          first_name: $scope.firstName,
+          last_name: $scope.lastName,
+          occupation: $scope.occupation
         }).then(function(response){
           updateEmployees();
         });
@@ -61,6 +68,7 @@
       };
     }
 
+    var example = angular.module('exampleApp',[]);
     example.service('ExampleService',['$http',ExampleService]);
     example.controller('exampleController',['$scope','ExampleService',ExampleController]);
   </script>
