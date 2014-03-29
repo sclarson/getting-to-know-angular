@@ -6,30 +6,10 @@
 </head>
 <!-- This is not an appropriate usage of ng-init, but it does work.
   see: http://docs.angularjs.org/api/ng/directive/ngInit for details -->
-<body ng-controller="exampleController">
-  <!--<h1 ng-bind="title"></h1>-->
-  <input type="button" class="btn btn-primary" value="Say Hello" ng-click="addEmployee()"/><br/>
-  <label for="userInput" ng-bind="filterText">Filter:</label><input id="userInput" ng-model="userInput" type="text"/>
-  <hr/>
-  <p>Employees:</p>
-  <ul>
-    <!--http://docs.angularjs.org/api/ng/directive/ngRepeat-->
-    <!--http://docs.angularjs.org/api/ng/filter/orderBy-->
-    <!--Ordering on the client doesn't make sense in many situations, think before you type-->
-    <li ng-repeat="employee in employees | orderBy:'last_name' | filter: userInput ">
-      {{employee.first_name}} {{employee.last_name}} - {{employee.occupation | uppercase}}
-    </li>
-  </ul>
-  <hr />
-  <form>
-  <label for="firstName">FirstName:</label><input id="firstName" focus ng-model="firstName" focus /><br/>
-  <label for="lastName">LastName:</label><input id="lastName" focus ng-model="lastName" focus/><br/>
-  <label for="company">Company:</label><input id="company" focus ng-model="company" focus/><br/>
-  <label for="email">Email:</label><input id="email" focus ng-model="email" focus/><br/>
-  <label for="occupation">Occupation:</label><input id="occupation" ng-model="occupation" focus/><br/>
-  <input type="button" value="Add Employee" ng-click="addEmployee()" />
-  </form>
+<body>
+  <div ng-view="" ng-animate="'animate'"></div>
   <script src='/javascripts/angular.js'></script>
+  <script src='/javascripts/angular-route.js'></script>
   <script>
     //Code inlined for demo purposes only, don't actually do this in production
     function ExampleController($scope, ExampleService) {
@@ -87,7 +67,9 @@
 
               // Focus the next element
               if (nextIndex >= 0 && nextIndex < focusable.length)
+              {
                 focusable[nextIndex].focus();
+              }
               e.preventDefault();
             }
           });
@@ -95,10 +77,57 @@
       }
     }
 
-    var example = angular.module('exampleApp',[]);
+    function detailsController($scope, $routeParams, ExampleService){
+      ExampleService.fetchAllEmployees().then(function(response){
+        var data = response.data;
+        $scope.employees = data;
+        $scope.employee = $scope.employees[$routeParams.index];
+      });
+
+      function updateEmployees(){
+        ExampleService.fetchAllEmployees().then(function(response){
+          var data = response.data;
+          $scope.employees = data;
+          $scope.employee = $scope.employees[$routeParams.index];
+        });
+      }
+
+      $scope.updateEmployee = function(){
+        ExampleService.updateEmployee({
+          active: "true",
+          company: $scope.employee.company,
+          email: $scope.employee.email,
+          first_name: $scope.employee.first_name,
+          last_name: $scope.employee.last_name,
+          occupation: $scope.employee.occupation
+        }).then(function(response){
+          updateEmployees();
+        });
+      }
+    }
+
+    var example = angular.module('exampleApp',['ngRoute']);
     example.directive('focus',focusDirective);
     example.service('ExampleService',['$http',ExampleService]);
     example.controller('exampleController',['$scope','ExampleService',ExampleController]);
+    example.controller('detailsController',['$scope','$routeParams','ExampleService',detailsController]);
+
+    example.config(['$routeProvider',
+      function($routeProvider){
+        $routeProvider.
+          when('/',{
+            templateUrl: 'partials/index.html',
+            controller: 'exampleController'
+          }).
+          when('/details/:index',{
+            templateUrl: 'partials/details.html',
+            controller: 'detailsController'
+          }).
+          otherwise({
+            redirectTo: '/'
+          });
+      }
+    ]);
   </script>
 </body>
 </html>
